@@ -23,6 +23,10 @@ add_executable(hexl_ntt
         include/number-theory.hpp
         include/types.hpp
         include/util.hpp
+        include/avx512-util.hpp
+        include/cpu-features.hpp
+        include/logging.hpp
+        include/util-internal.hpp
         src/fwd-ntt-avx512.cpp
         src/inv-ntt-avx512.cpp
         src/ntt-internal.cpp

@@ -3,10 +3,8 @@
 
 #pragma once
 
-#include <stdint.h>
-
+#include <cstdint>
 #include <utility>
-
 #include "ntt.hpp"
 #include "number-theory.hpp"
 #include "aligned-allocator.hpp"

@@ -3,11 +3,9 @@
 
 #pragma once
 
-#include <stdint.h>
-
+#include <cstdint>
 #include <limits>
 #include <vector>
-
 #include "check.hpp"
 #include "compiler.hpp"
 

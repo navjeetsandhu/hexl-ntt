@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include <cstring>
-
 #include "logging.hpp"
 #include "ntt.hpp"
 #include "number-theory.hpp"

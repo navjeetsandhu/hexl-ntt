@@ -3,8 +3,7 @@
 
 #pragma once
 
-#include <stdint.h>
-
+#include <cstdint>
 #include "types.hpp"
 
 // Create logging/debug macros with no run-time overhead unless HEXL_DEBUG is
@@ -16,10 +15,15 @@
 /// error
 /// @param[in] cond A boolean indication the condition
 /// @param[in] expr The expression to be logged
-#define HEXL_CHECK(cond, expr)                              \
+//#define HEXL_CHECK(cond, expr)                              \
   if (!(cond)) {                                            \
     LOG(ERROR) << expr << " in function: " << __FUNCTION__  \
                << " in file: " __FILE__ << ":" << __LINE__; \
+    throw std::runtime_error("Error. Check log output");    \
+  }
+
+#define HEXL_CHECK(cond, expr)                              \
+  if (!(cond)) {                                            \
     throw std::runtime_error("Error. Check log output");    \
   }
 

@@ -3,13 +3,13 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 #include <memory>
 #include <vector>
 
-#include "hexl/util/aligned-allocator.hpp"
-#include "hexl/util/allocator.hpp"
+#include "aligned-allocator.hpp"
+#include "allocator.hpp"
 
 namespace intel {
 namespace hexl {
