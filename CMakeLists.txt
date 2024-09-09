@@ -32,3 +32,21 @@ add_executable(hexl_ntt
         src/ntt-internal.cpp
         src/ntt-radix-2.cpp
         src/ntt-radix-4.cpp)
+
+
+#------------------------------------------------------------------------------
+# Third-party code...
+#------------------------------------------------------------------------------
+find_package(CpuFeatures CONFIG)
+if (NOT CpuFeatures_FOUND)
+    message(STATUS "CpuFeatures: pre-installed CpuFeatures not found")
+    add_subdirectory(cmake/third-party/cpu-features)
+else()
+    message(STATUS "CpuFeatures: found")
+    set_target_properties(CpuFeatures::cpu_features PROPERTIES IMPORTED_GLOBAL TRUE)
+    add_library(cpu_features ALIAS CpuFeatures::cpu_features)
+    get_target_property(
+            CpuFeatures_INCLUDE_DIR
+            CpuFeatures::cpu_features
+            INTERFACE_INCLUDE_DIRECTORIES)
+endif()
