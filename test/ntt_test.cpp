@@ -12,33 +12,43 @@ auto getData0() {
                                   12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
                                   23, 24, 25, 26, 27, 28, 29, 30, 31, 32});
 }
-int main() {
-    std::cout << "Test Basic NTT!" << std::endl;
+void ntt_full(uint64_t *result, const uint64_t *operand, uint64_t N, uint64_t modulus) {
     int i;
-    auto data0 =   getData0();
-    uint64_t modulus = std::get<1>(data0);
-    uint64_t N = std::get<0>(data0);
 
-
-    std::vector<uint64_t> input = std::get<2>(data0);
-
-    std::vector<uint64_t> out_buffer_final(N);
+    std::cout << "N: " << N << " Modulus: " << modulus << "\n";
 
     std::cout << "ComputeForward Input:\n";
-    for(i=0;i<10;i++){
-        std::cout << input[i] << ' ';
+    for(i=0;i<N;i++){
+        std::cout << operand[i] << ' ';
     }
     std::cout << '\n';
 
-    ntt::ntt_full(out_buffer_final.data(), input.data(), N, modulus);
+    ntt::ntt_full(result, operand, N, modulus);
 
     std::cout << "ComputeInverse Output:\n";
 
-    for(i=0;i<10;i++){
-        std::cout << out_buffer_final[i] << ' ';
+    for(i=0;i<N;i++){
+        std::cout << result[i] << ' ';
     }
-
     std::cout << '\n';
+
+}
+void test_ntt_full(std::tuple<uint64_t, uint64_t, std::vector<uint64_t>, std::vector<uint64_t>>&& input_data)
+
+{
+    uint64_t modulus = std::get<1>(input_data);
+    uint64_t N = std::get<0>(input_data);
+    std::vector<uint64_t> input = std::get<2>(input_data);
+    std::vector<uint64_t> out_buffer_final(N);
+    ntt_full(out_buffer_final.data(), input.data(), N, modulus);
+}
+
+
+int main() {
+    std::cout << "Test Basic NTT!" << std::endl;
+    test_ntt_full(getData0());
+
+
 
     return 0;
 }
