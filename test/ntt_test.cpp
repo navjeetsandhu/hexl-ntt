@@ -1,5 +1,6 @@
 #include<iostream>
 #include "ntt.hpp"
+#include "custom_assert.h"
 
 auto getData0() {
     return std::make_tuple(
@@ -12,7 +13,7 @@ auto getData0() {
                                   12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
                                   23, 24, 25, 26, 27, 28, 29, 30, 31, 32});
 }
-void ntt_full(uint64_t *result, const uint64_t *operand, uint64_t N, uint64_t modulus) {
+void test_ntt_full(uint64_t *result, const uint64_t *operand, uint64_t N, uint64_t modulus) {
     int i;
 
     std::cout << "N: " << N << " Modulus: " << modulus << "\n";
@@ -32,6 +33,11 @@ void ntt_full(uint64_t *result, const uint64_t *operand, uint64_t N, uint64_t mo
     }
     std::cout << '\n';
 
+    for(i=0;i<N;i++){
+        c_assert(operand[i] == result[i]);
+    }
+    std::cout << "Test Pass" << '\n';
+
 }
 void test_ntt_full(std::tuple<uint64_t, uint64_t, std::vector<uint64_t>, std::vector<uint64_t>>&& input_data)
 
@@ -40,15 +46,12 @@ void test_ntt_full(std::tuple<uint64_t, uint64_t, std::vector<uint64_t>, std::ve
     uint64_t N = std::get<0>(input_data);
     std::vector<uint64_t> input = std::get<2>(input_data);
     std::vector<uint64_t> out_buffer_final(N);
-    ntt_full(out_buffer_final.data(), input.data(), N, modulus);
+    test_ntt_full(out_buffer_final.data(), input.data(), N, modulus);
 }
 
 
 int main() {
     std::cout << "Test Basic NTT!" << std::endl;
     test_ntt_full(getData0());
-
-
-
     return 0;
 }
