@@ -17,4 +17,5 @@ if(USE_RANDEN)
   target_link_libraries(hexl-ntt INTERFACE randen)
 endif()
 
+target_link_libraries(hexl-ntt INTERFACE HEXL::hexl)
 
