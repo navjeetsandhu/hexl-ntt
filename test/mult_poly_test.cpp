@@ -1,16 +1,24 @@
 #include <iostream>
 #include "mult_poly.hpp"
 
+void print_results(const std::string& msg, const std::vector<uint64_t>& result){
+    std::cout << msg << std::endl;
+    for (uint64_t i : result)
+        std::cout << i << ' ';
+    std::cout << std::endl;
+}
+
+
 void test_mult_poly_naive()
 {
     std::vector<uint64_t> a = {1, 2, 3, 4};
     std::vector<uint64_t> b = {1, 3, 5, 7};
     std::vector<uint64_t> result(a.size() + b.size() - 1, 0);
     mult_poly_naive(a, b, result);
-    std::cout << "Result of Schoolbook Multiplication: " << std::endl;
-    for (int i = 0; i < result.size(); i++)
-        std::cout << result[i] << ' ';
-    std::cout << std::endl;
+    print_results("Schoolbook Multiplication", result);
+    std::fill(result.begin(), result.end(), 0);
+    mult_poly_naive_q(a, b, 17,result);
+    print_results("Integers modulo a prime number q", result);
 }
 
 int main()
