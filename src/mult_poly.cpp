@@ -23,19 +23,40 @@ void mult_poly_naive(const std::vector<uint64_t> & p1, const std::vector<uint64_
     }
 }
 /*
- integers modulo a prime number q
- The interesting thing about working in a finite field is that the polynomial coefficients
- “wrap around” when being multiplied. So regardless of how much polynomial arithmetic we
- perform, the coefficients of the polynomial can still be bounded in a fixed range
+ * integers modulo a prime number q
+ * The interesting thing about working in a finite field is that the polynomial coefficients
+ * wrap around when being multiplied. So regardless of how much polynomial arithmetic we
+ * perform, the coefficients of the polynomial can still be bounded in a fixed range
 */
-void mult_poly_naive_q(const std::vector<uint64_t>& a, const std::vector<uint64_t>& b, uint64_t q, std::vector<uint64_t>& result)
-{
-
-    mult_poly_naive(a,b,result);
+void mult_poly_naive_q(const std::vector<uint64_t>& p1, const std::vector<uint64_t>& p2,
+                       uint64_t q, std::vector<uint64_t>& result) {
+    mult_poly_naive(p1,p2,result);
     for (uint64_t & i : result)
     {
         if(i>q) {
             i = i % q;
         }
+    }
+}
+
+/*
+ * Cyclic Convolution (CC)
+ * The degree of the polynomial will only grow larger and larger as we perform
+ * more multiplications. That means we need to have longer
+ * arrays to store coefficients and more complex convolutions every time a
+ * multiplication is performed.  It would be great if the degree of the polynomials
+ * could wrap around just like the coefficients.
+ * we can take modulo some polynomial ϕ(x) after every polynomial operation.
+ * The resulting polynomial’s degree would never be larger or equal to the degree of ϕ(x).
+ * We call such structure Zq[x]/(ϕ(x)
+ * when ϕ(x)=xd−1. If we take any polynomial modulo xd−1, it’s equivalent to removing multiples
+ * of xd−1 from the polynomial until the resulting polynomial has degree lower than d
+ */
+void mult_poly_naive_q_cc(const std::vector<uint64_t>& p1, const std::vector<uint64_t>& p2,
+                          uint64_t q, uint64_t d, std::vector<uint64_t>& result) {
+    mult_poly_naive_q(p1,p2,q, result);
+    for (uint64_t i = d; i < result.size(); ++i) {
+        result[i - d] = (result[i - d] + result[i]) % q;
+        result[i] = 0;
     }
 }

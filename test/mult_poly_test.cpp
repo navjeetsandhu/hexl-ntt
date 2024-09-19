@@ -21,6 +21,10 @@ void test_mult_poly()
     std::fill(result.begin(), result.end(), 0);
     mult_poly_naive_q(a, b, 17,result);
     print_results("Integers modulo a prime number q = 17", result);
+    std::fill(result.begin(), result.end(), 0);
+    mult_poly_naive_q_cc(a, b, 17,4, result);
+    std::vector<uint64_t> res(result.begin(), result.begin() + std::min(4, static_cast<int>(result.size())));
+    print_results("Cyclic Convolution (CC) q = 17 d =4 ", res);
 }
 
 int main()
