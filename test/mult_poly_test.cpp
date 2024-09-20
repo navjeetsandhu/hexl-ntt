@@ -31,6 +31,23 @@ void test_mult_poly_one()
     std::fill(result.begin(), result.end(), 0);
     mult_poly_naive_q_nwc(p1, p2, 17,4, result);
     std::copy_n(result.begin(), 4, res.begin());
+    //std::vector<uint64_t> res1(result.begin(), result.begin() + std::min(4, static_cast<int>(result.size())));
+    print_results("Negative wrapped convolution (negacyclic convolution):  q = 17 d =4 ", result);
+    print_results("Negative wrapped convolution (negacyclic convolution):  q = 17 d =4 ", res);
+}
+
+
+void test_mult_poly_one_nwc()
+{
+    std::vector<uint64_t> p1 = {1, 2, 3, 4};
+    std::vector<uint64_t> p2 = {1, 3, 5, 7};
+    print_results("Input p1", p1);
+    print_results("Input p2", p2);
+    std::vector<uint64_t> result(p1.size() + p2.size() - 1, 0);
+
+    mult_poly_naive_q_nwc(p1, p2, 17,4, result);
+    std::vector<uint64_t> res(result.begin(), result.begin() + std::min(4, static_cast<int>(result.size())));
+    print_results("Negative wrapped convolution (negacyclic convolution):  q = 17 d =4 ", result);
     print_results("Negative wrapped convolution (negacyclic convolution):  q = 17 d =4 ", res);
 }
 
@@ -47,6 +64,6 @@ void test_mult_poly_two() {
 
 int main()
 {
-    test_mult_poly_two();
+    test_mult_poly_one_nwc();
     return 0;
 }
