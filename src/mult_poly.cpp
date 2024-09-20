@@ -1,5 +1,6 @@
 #include "mult_poly.hpp"
-
+#include <iostream>
+//#include "utils.hpp"
 /*
  * https://cryptographycaffe.sandboxaq.com/posts/ntt-01/
  * Polynomials are really just fancy lists of numbers that have a particular way of doing arithmetic.
@@ -66,7 +67,8 @@ void mult_poly_naive_q_nwc(const std::vector<uint64_t>& p1, const std::vector<ui
                           uint64_t q, uint64_t d, std::vector<uint64_t>& result) {
     mult_poly_naive_q(p1,p2,q, result);
     for (uint64_t i = d; i < result.size(); ++i) {
-        result[i - d] = (result[i - d] - result[i]) % q;
+        int64_t tmp = result[i - d] - result[i];
+        result[i - d] = tmp > 0 ? tmp % q : tmp + q;
         result[i] = 0;
     }
 }
