@@ -31,12 +31,7 @@ void mult_poly_naive(const std::vector<uint64_t> & p1, const std::vector<uint64_
 void mult_poly_naive_q(const std::vector<uint64_t>& p1, const std::vector<uint64_t>& p2,
                        uint64_t q, std::vector<uint64_t>& result) {
     mult_poly_naive(p1,p2,result);
-    for (uint64_t & i : result)
-    {
-        if(i>q) {
-            i = i % q;
-        }
-    }
+    for (uint64_t & i : result) i = i % q;
 }
 
 /*
