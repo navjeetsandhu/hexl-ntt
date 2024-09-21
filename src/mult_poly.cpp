@@ -13,15 +13,13 @@ The classical way of performing polynomial multiplications is to expand out the 
 i.e. Schoolbook Multiplication
 */
 
-void mult_poly_naive(const std::vector<uint64_t> & p1, const std::vector<uint64_t> & p2, std::vector<uint64_t>& result)
+void mult_poly_naive(const std::vector<uint64_t> & p1,
+                     const std::vector<uint64_t> & p2,
+                     std::vector<uint64_t>& result)
 {
     for (int i = 0; i < p1.size(); ++i)
-    {
         for (int j = 0; j < p2.size(); ++j)
-        {
             result[i + j] += p1[i] * p2[j];
-        }
-    }
 }
 /*
  * integers modulo a prime number q
@@ -29,7 +27,8 @@ void mult_poly_naive(const std::vector<uint64_t> & p1, const std::vector<uint64_
  * wrap around when being multiplied. So regardless of how much polynomial arithmetic we
  * perform, the coefficients of the polynomial can still be bounded in a fixed range
 */
-void mult_poly_naive_q(const std::vector<uint64_t>& p1, const std::vector<uint64_t>& p2,
+void mult_poly_naive_q(const std::vector<uint64_t>& p1,
+                       const std::vector<uint64_t>& p2,
                        uint64_t q, std::vector<uint64_t>& result) {
     mult_poly_naive(p1,p2,result);
     for (uint64_t & i : result) i = i % q;
