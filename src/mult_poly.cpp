@@ -29,7 +29,8 @@ void mult_poly_naive(const std::vector<uint64_t> & p1,
 */
 void mult_poly_naive_q(const std::vector<uint64_t>& p1,
                        const std::vector<uint64_t>& p2,
-                       uint64_t q, std::vector<uint64_t>& result) {
+                       uint64_t q,
+                       std::vector<uint64_t>& result) {
     mult_poly_naive(p1,p2,result);
     for (uint64_t & i : result) i = i % q;
 }
@@ -47,8 +48,11 @@ void mult_poly_naive_q(const std::vector<uint64_t>& p1,
  * when ϕ(x)=xd−1. If we take any polynomial modulo xd−1, it’s equivalent to removing multiples
  * of xd−1 from the polynomial until the resulting polynomial has degree lower than d
  */
-void mult_poly_naive_q_cc(const std::vector<uint64_t>& p1, const std::vector<uint64_t>& p2,
-                          uint64_t q, uint64_t d, std::vector<uint64_t>& result) {
+void mult_poly_naive_q_cc(const std::vector<uint64_t>& p1,
+                          const std::vector<uint64_t>& p2,
+                          uint64_t q,
+                          uint64_t d,
+                          std::vector<uint64_t>& result) {
     mult_poly_naive_q(p1,p2,q, result);
     for (uint64_t i = d; i < result.size(); ++i) {
         result[i - d] = (result[i - d] + result[i]) % q;
@@ -62,8 +66,10 @@ void mult_poly_naive_q_cc(const std::vector<uint64_t>& p1, const std::vector<uin
  * from a polynomial, what wraps around will be the negation of the original
  * high degree term coefficient that got reduced.
 */
-void mult_poly_naive_q_nwc(const std::vector<uint64_t>& p1, const std::vector<uint64_t>& p2,
-                          uint64_t q, uint64_t d, std::vector<uint64_t>& result) {
+void mult_poly_naive_q_nwc(const std::vector<uint64_t>& p1,
+                           const std::vector<uint64_t>& p2,
+                          uint64_t q, uint64_t d,
+                          std::vector<uint64_t>& result) {
     mult_poly_naive_q(p1,p2,q, result);
     for (uint64_t i = d; i < result.size(); ++i) {
         int64_t tmp = result[i - d] - result[i];
