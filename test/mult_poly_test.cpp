@@ -35,17 +35,6 @@ void test_mult_poly(const std::vector<uint64_t>& p1,
 }
 
 
-void test_mult_poly_two() {
-    std::vector<uint64_t> p1 = {1, 2, 3, 4};
-    std::vector<uint64_t> p2 = {5, 6, 7, 8};
-    print_results("Input p1", p1);
-    print_results("Input p2", p2);
-    std::vector<uint64_t> result(p1.size() + p2.size() - 1, 0);
-    mult_poly_naive(p1, p2, result);
-    print_results("Schoolbook Multiplication", result);
-}
-
-
 int main()
 {
     std::vector<uint64_t> p1 = {1, 2, 3, 4};
