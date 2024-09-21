@@ -19,14 +19,12 @@ void test_mult_poly_one()
     std::fill(result.begin(), result.end(), 0);
     mult_poly_naive_q_cc(p1, p2, 17,4, result);
     std::vector<uint64_t> res(result.begin(), result.begin() + std::min(4, static_cast<int>(result.size())));
-    print_results("Cyclic Convolution (CC) q = 17 d =4 ", res);
+    print_results("Negative wrapped convolution, Cyclic Convolution, cc with q = 17 d =4 ", res);
 
     std::fill(result.begin(), result.end(), 0);
     mult_poly_naive_q_nwc(p1, p2, 17,4, result);
     std::copy_n(result.begin(), 4, res.begin());
-    //std::vector<uint64_t> res1(result.begin(), result.begin() + std::min(4, static_cast<int>(result.size())));
-    print_results("Negative wrapped convolution (negacyclic convolution):  q = 17 d =4 ", result);
-    print_results("Negative wrapped convolution (negacyclic convolution):  q = 17 d =4 ", res);
+    print_results("Negative wrapped convolution, negacyclic convolution, nwc with q = 17 d =4 ", res);
 }
 
 
