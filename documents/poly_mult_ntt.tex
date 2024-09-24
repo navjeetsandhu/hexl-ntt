@@ -386,7 +386,7 @@
 
 	\subsection{Using NTT to Calculate Positive-Wrapped Convolutions}
 
-	Because NTT is a variant of DFT in the polynomial ring, one can apply DFT convolution theorem to calculate positive-wrapped convolution. Let g and h are the multiplicands’ vectors of polynomial coefficients. The positive-wrapped convolution of g and h, PWC can be calculated by:
+	Because NTT is a variant of DFT in the polynomial ring, one can apply DFT convolution theorem to calculate positive-wrapped convolution. Let g and h are the multiplicand vectors of polynomial coefficients. The positive-wrapped convolution of g and h, PWC can be calculated by:
 	PWC = INTT(NTT(g) $\circ$ NTT(h))
 
 	where $\circ$ is an element-wise vector multiplication in $\Z_{q}$.
