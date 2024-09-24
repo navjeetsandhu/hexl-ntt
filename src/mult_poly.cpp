@@ -68,7 +68,8 @@ void mult_poly_naive_q_cc(const std::vector<uint64_t>& p1,
 */
 void mult_poly_naive_q_nwc(const std::vector<uint64_t>& p1,
                            const std::vector<uint64_t>& p2,
-                          uint64_t q, uint64_t d,
+                          uint64_t q,
+                          uint64_t d,
                           std::vector<uint64_t>& result) {
     mult_poly_naive_q(p1,p2,q, result);
     for (uint64_t i = d; i < result.size(); ++i) {
