@@ -4,7 +4,7 @@
 %  Definition Starts
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
+
 \usepackage{amsfonts}
 \usepackage{amsthm}
 
@@ -120,7 +120,7 @@
 \definecolor{linkblue}{named}{Blue}
 \hypersetup{colorlinks=true, linkcolor=linkblue,  anchorcolor=linkblue,
 	citecolor=linkblue, filecolor=linkblue, menucolor=linkblue,
-	urlcolor=linkblue} 
+	urlcolor=linkblue}
 \setlength{\parskip}{1ex}
 \usepackage{wasysym}
 \usepackage{graphicx}
@@ -134,7 +134,7 @@
 \usepackage{fixfoot}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{mathrsfs}  
+\usepackage{mathrsfs}
 \usepackage{venturis}
 \usepackage{placeins}
 
@@ -182,11 +182,11 @@
 	\vspace{\problemsep}
 	\noindent{\scshape \underline{#1}}
 	\renewcommand\descriptionlabel[1]%
-		{\hspace{\labelsep}\textsc{##1}}
+	{\hspace{\labelsep}\textsc{##1}}
 	\renewcommand{\given}{\item[Given:]}
 	\renewcommand{\find}{\item[Find:]}
 	\begin{description}
-}{
+	}{
 	\end{description}
 	\vspace{\problemsep}
 }
@@ -213,223 +213,233 @@
 
 \begin{document}
 
-\maketitle
+	\maketitle
 
-\section{Introduction}
-The Number Theoretic Transform (NTT) can efficiently calculate polynomial multiplication using the convolution theorem with a quasi-linear complexity instead of $O(d^2)$
+	\section{Introduction}
+	The Number Theoretic Transform (NTT) can efficiently calculate polynomial multiplication using the convolution theorem with a quasi-linear complexity instead of $O(d^2)$
 
-\section{Linear convolution}
-Suppose that $g(x)$ and $h(x)$ are polynomials of degree $d - 1$ and $x$ is the polynomial variable. Polynomial multiplication equals a discrete linear convolution between the coefficients’ vectors g and h. The traditional multiplication algorithm has an $O(d^2)$ complexity.
+	\section{Linear convolution}
+	Suppose that $g(x)$ and $h(x)$ are polynomials of degree $d - 1$ and $x$ is the polynomial variable. Polynomial multiplication equals a discrete linear convolution between the coefficients’ vectors g and h. The traditional multiplication algorithm has an $O(d^2)$ complexity.
 
-\begin{align*}
- y[k] &= (g*h)[k] \\
-        &= \sum_{i=0}^{k}g[i]h[k-i] \\
-\end{align*} 
+	\begin{align*}
+		y[k] &= (g*h)[k] \\
+		&= \sum_{i=0}^{k}g[i]h[k-i] \\
+	\end{align*}
 
-\subsection{Example}
-If $g(x) = 1 + 2x + 3x^2 + 4x^3$ and $h(x) = 5 + 6x + 7x^2 + 8x^3$ or in vector notation:  $g = [1, 2, 3, 4]$, and $h = [5, 6, 7, 8]$. The linear convolution result is $y(x) = 5 + 16x + 34x^2 + 60x^3 + 61x^4 + 52x^5 + 32x^6$, or in vector notation, $y = [5, 16, 34, 60, 61, 52, 32]$.
+	\subsection{Example}
+	If $g(x) = 1 + 2x + 3x^2 + 4x^3$ and $h(x) = 5 + 6x + 7x^2 + 8x^3$ or in vector notation:  $g = [1, 2, 3, 4]$, and $h = [5, 6, 7, 8]$. The linear convolution result is $y(x) = 5 + 16x + 34x^2 + 60x^3 + 61x^4 + 52x^5 + 32x^6$, or in vector notation, $y = [5, 16, 34, 60, 61, 52, 32]$.
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.7\columnwidth]{fig/trad_mult.png}
- 	\caption{The traditional multiplication} 
-\label{fig:TradMult}
-\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.7\columnwidth]{fig/trad_mult.png}
+		\caption{The traditional multiplication}
+		\label{fig:TradMult}
+	\end{figure}
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.8\columnwidth]{fig/naive_poly_mult.png}
- 	\caption{The traditional multiplication in C++} 
-\label{fig:naive_poly_mult}
-\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.8\columnwidth]{fig/naive_poly_mult.png}
+		\caption{The traditional multiplication in C++}
+		\label{fig:naive_poly_mult}
+	\end{figure}
 
 
-\section{Integer ring modulo $\Z_{q}$}
-An integer ring modulo q (also called integers modulo a prime number), denoted by $\Z_{q}$, is a mathematical structure known as a cyclic group or finite field in abstract algebra. Specifically, it is the set of residue classes of integers modulo q. This means it's the set of all possible remainders when integers are divided by q.
-For example, if q equals 2, then $\Z_{q}$ (which is $\Z_{2}$ in this case) includes only 0 and 1 because any integer either leaves a remainder of 0 or 1 when divided by 2. In the field of cryptography, we typically work with finite fields. The exciting thing about working in a finite field is that the polynomial coefficients “wrap around” when multiplied. So, regardless of how much polynomial arithmetic we perform, the polynomial coefficients can still be bounded in a fixed range, which is very attractive from an implementation perspective.
+	\section{Integer ring modulo $\Z_{q}$}
+	An integer ring modulo q (also called integers modulo a prime number), denoted by $\Z_{q}$, is a mathematical structure known as a cyclic group or finite field in abstract algebra. Specifically, it is the set of residue classes of integers modulo q. This means it's the set of all possible remainders when integers are divided by q.
+	For example, if q equals 2, then $\Z_{q}$ (which is $\Z_{2}$ in this case) includes only 0 and 1 because any integer either leaves a remainder of 0 or 1 when divided by 2. In the field of cryptography, we typically work with finite fields. The exciting thing about working in a finite field is that the polynomial coefficients “wrap around” when multiplied. So, regardless of how much polynomial arithmetic we perform, the polynomial coefficients can still be bounded in a fixed range, which is very attractive from an implementation perspective.
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.9\columnwidth]{fig/Zq_Cplus.png}
- 	\caption{Integer ring modulo $\Z_{q}$ in C++} 
-\label{fig:Zq_Cplus}
-\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.9\columnwidth]{fig/Zq_Cplus.png}
+		\caption{Integer ring modulo $\Z_{q}$ in C++}
+		\label{fig:Zq_Cplus}
+	\end{figure}
 
 
-\subsection{Example}
-If q equals 17, then $\Z_{q}$ (which is $\Z_{17}$ in this case) includes only 0 to 16 because any integer leaves a remainder of 0 to 16 when divided by 17. Hence the vector multiplication for vectors $g = [1, 2, 3, 4]$, and $h = [5, 6, 7, 8]$ with modulo a prime number $q = 17$ is  $[5, 16, 0, 9, 10, 1, 15]$
+	\subsection{Example}
+	If q equals 17, then $\Z_{q}$ (which is $\Z_{17}$ in this case) includes only 0 to 16 because any integer leaves a remainder of 0 to 16 when divided by 17. Hence the vector multiplication for vectors $g = [1, 2, 3, 4]$, and $h = [5, 6, 7, 8]$ with modulo a prime number $q = 17$ is  $[5, 16, 0, 9, 10, 1, 15]$
 
-\section{Positive wrapped convolution (cyclic convolution)}
-However, one can quickly notice an item that is not so positive in the current setting - the degree of the polynomial will only grow larger and larger as we perform more multiplications. That means we need a more extended array to store coefficients and more complex convolutions every time a multiplication is performed. It would be great if the degree of the polynomials could “wrap around” just like the coefficients. As it turns out, another algebraic structure is precisely for that - Polynomial Quotient Rings. Like in the base field  $\Z_{q}$, where we would take modulo q after every arithmetic operation, we can also take modulo some polynomial $\Phi(x)$ after every polynomial operation. The resulting polynomial’s degree would never be more significant or equal to the degree of $\Phi(x)$. We call such structure $\Z_{q}[x]/(\Phi(x))$. In the context of lattice-based Cryptography, $\Phi(x)$ is chosen to be a polynomial looking either like $x^d - 1$ or $x^d + 1$.  A cyclic convolution or positive wrapped convolution, $PWC(x)$ is defined as: $PWC(x) = \Z_{q}/x^d - 1$
+	\section{Positive wrapped convolution (cyclic convolution)}
+	However, one can quickly notice an item that is not so positive in the current setting - the degree of the polynomial will only grow larger and larger as we perform more multiplications. That means we need a more extended array to store coefficients and more complex convolutions every time a multiplication is performed. It would be great if the degree of the polynomials could “wrap around” just like the coefficients. As it turns out, another algebraic structure is precisely for that - Polynomial Quotient Rings. Like in the base field  $\Z_{q}$, where we would take modulo q after every arithmetic operation, we can also take modulo some polynomial $\Phi(x)$ after every polynomial operation. The resulting polynomial’s degree would never be more significant or equal to the degree of $\Phi(x)$. We call such structure $\Z_{q}[x]/(\Phi(x))$. In the context of lattice-based Cryptography, $\Phi(x)$ is chosen to be a polynomial looking either like $x^d - 1$ or $x^d + 1$.  A cyclic convolution or positive wrapped convolution, $PWC(x)$ is defined as: $PWC(x) = \Z_{q}/x^d - 1$
 
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.9\columnwidth]{fig/PWC_cplus.png}
- 	\caption{Positive wrapped convolution (cyclic convolution) in C++} 
-\label{fig:PWC_cplus}
-\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.9\columnwidth]{fig/PWC_cplus.png}
+		\caption{Positive wrapped convolution (cyclic convolution) in C++}
+		\label{fig:PWC_cplus}
+	\end{figure}
 
 
 
-\subsection{Example}
-If $g(x) = 1 + 2x + 3x^2 + 4x^3$ and $h(x) = 5 + 6x + 7x^2 + 8x^3$ or in vector notation:  $g = [1, 2, 3, 4]$, and $h = [5, 6, 7, 8]$. We already have calculated the linear convolution result is $y(x) = 5 + 16x + 34x^2 + 60x^3 + 61x^4 + 52x^5 + 32x^6$, or in vector notation, $y = [5, 16, 34, 60, 61, 52, 32]$. If we don't apply an integer ring modulo q, then $PWC(x) = y(x)$ mod $x^d - 1$.  We need a long division by $x^d - 1$ to calculate positive wrapped convolution. Thus, the result of the cyclic convolution is $PWC(x) = 66 + 68x + 66x^2 + 60x^3$ or $[66, 68, 66, 60]$. Notice that we present the result sorted in increasing power.
+	\subsection{Example}
+	If $g(x) = 1 + 2x + 3x^2 + 4x^3$ and $h(x) = 5 + 6x + 7x^2 + 8x^3$ or in vector notation:  $g = [1, 2, 3, 4]$, and $h = [5, 6, 7, 8]$. We already have calculated the linear convolution result is $y(x) = 5 + 16x + 34x^2 + 60x^3 + 61x^4 + 52x^5 + 32x^6$, or in vector notation, $y = [5, 16, 34, 60, 61, 52, 32]$. If we don't apply an integer ring modulo q, then $PWC(x) = y(x)$ mod $x^d - 1$.  We need a long division by $x^d - 1$ to calculate positive wrapped convolution. Thus, the result of the cyclic convolution is $PWC(x) = 66 + 68x + 66x^2 + 60x^3$ or $[66, 68, 66, 60]$. Notice that we present the result sorted in increasing power.
 
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.7\columnwidth]{fig/PWC_1.png}
- 	\caption{Schoolbook method for positive wrapped convolution (cyclic convolution)} 
-\label{fig:PWC_1}
-\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.7\columnwidth]{fig/PWC_1.png}
+		\caption{Schoolbook method for positive wrapped convolution (cyclic convolution)}
+		\label{fig:PWC_1}
+	\end{figure}
 
-\section{Negative wrapped convolution (negacyclic convolution)}
-A cyclic convolution or negative wrapped convolution, $NWC(x)$ is defined as: $PWC(x) = \Z_{q}/x^d + 1$  
+	\section{Negative wrapped convolution (negacyclic convolution)}
+	A cyclic convolution or negative wrapped convolution, $NWC(x)$ is defined as: $PWC(x) = \Z_{q}/x^d + 1$
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.9\columnwidth]{fig/NWC_cplus.png}
- 	\caption{Negative wrapped convolution (negacyclic convolution) in C++} 
-\label{fig:NWC_cplus}
-\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.9\columnwidth]{fig/NWC_cplus.png}
+		\caption{Negative wrapped convolution (negacyclic convolution) in C++}
+		\label{fig:NWC_cplus}
+	\end{figure}
 
-\subsection{Example}
-If $g(x) = 1 + 2x + 3x^2 + 4x^3$ and $h(x) = 5 + 6x + 7x^2 + 8x^3$ or in vector notation:  $g = [1, 2, 3, 4]$, and $h = [5, 6, 7, 8]$. We already have calculated the linear convolution result is $y(x) = 5 + 16x + 34x^2 + 60x^3 + 61x^4 + 52x^5 + 32x^6$, or in vector notation, $y = [5, 16, 34, 60, 61, 52, 32]$. If we don't apply an integer ring modulo q, then $NWC(x) = y(x)$ mod $x^d + 1$.  We need a long division by $x^d + 1$ to calculate positive wrapped convolution. Thus, the result of the negacyclic convolution is $NWC(x) = -56 -36x + 2x^2 + 60x^3$ or $[-56, -36, 2, 60]$. Notice that we present the result sorted in increasing power.
+	\subsection{Example}
+	If $g(x) = 1 + 2x + 3x^2 + 4x^3$ and $h(x) = 5 + 6x + 7x^2 + 8x^3$ or in vector notation:  $g = [1, 2, 3, 4]$, and $h = [5, 6, 7, 8]$. We already have calculated the linear convolution result is $y(x) = 5 + 16x + 34x^2 + 60x^3 + 61x^4 + 52x^5 + 32x^6$, or in vector notation, $y = [5, 16, 34, 60, 61, 52, 32]$. If we don't apply an integer ring modulo q, then $NWC(x) = y(x)$ mod $x^d + 1$.  We need a long division by $x^d + 1$ to calculate positive wrapped convolution. Thus, the result of the negacyclic convolution is $NWC(x) = -56 -36x + 2x^2 + 60x^3$ or $[-56, -36, 2, 60]$. Notice that we present the result sorted in increasing power.
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.7\columnwidth]{fig/NWC_1.png}
- 	\caption{Schoolbook method for negative wrapped convolution (negacyclic convolution)} 
-\label{fig:NWC_1}
-\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.7\columnwidth]{fig/NWC_1.png}
+		\caption{Schoolbook method for negative wrapped convolution (negacyclic convolution)}
+		\label{fig:NWC_1}
+	\end{figure}
 
 
-\section{NTT-Based Convolutions}
-In this section, we present the basics of NTT-based convolutions.
+	\section{NTT-Based Convolutions}
+	In this section, we present the basics of NTT-based convolutions.
 
-\subsection{Congruence}
-The symbol $\equiv$ denotes congruence and is different from equality. While equality means that items are the same, congruence means items have the same remainder when divided by mod. In a ring $\Z_{7681}$  and $d = 4$, the 4-th root of unity, which satisfy the condition $\omega^4 \equiv 1$ mod $7681$ are ${3383, 4298, 7680}$
+	\subsection{Congruence}
+	The symbol $\equiv$ denotes congruence and is different from equality. While equality means that items are the same, congruence means items have the same remainder when divided by mod. In a ring $\Z_{7681}$  and $d = 4$, the 4-th root of unity, which satisfy the condition $\omega^4 \equiv 1$ mod $7681$ are ${3383, 4298, 7680}$
 
-\subsection{Primitive n-th Root of Unity}
-Let $\Z_{q}$  be an integer ring modulo q, and $d - 1$ is the polynomial degree of g(x) and h(x). $\omega$ is a primitive n-th root of unity in $\Z_{q}$ if and only if:
-$\omega^d \equiv 1$ mod $q$ and $\omega^k \nequiv 1$ mod $q$  for $k < d$. 
+	\subsection{Primitive n-th Root of Unity}
+	Let $\Z_{q}$  be an integer ring modulo q, and $d - 1$ is the polynomial degree of g(x) and h(x). $\omega$ is a primitive n-th root of unity in $\Z_{q}$ if and only if:
+	$\omega^d \equiv 1$ mod $q$ and $\omega^k \nequiv 1$ mod $q$  for $k < d$.
 
-\subsection{Example}
-In a ring $\Z_{7681}$  and $d = 4$, the 4-th root of unity, which satisfy the condition $\omega^4 \equiv 1$ mod $7681$ are ${3383, 4298, 7680}$. Out of three roots, 7680 is not a primitive n-th root of unity, as there exists k = 2 < d that satisfy $\omega^d \equiv 1$ mod $7691$ Therefore $\omega$ = 3383 or $\omega$ = 4298 are the primitive 4-th root of unity in $\Z_{7681}$. The value of $\omega$  will be important in calculating NTT and positive-wrapped convolution.
+	\subsubsection{Example}
+	In a ring $\Z_{7681}$  and $d = 4$, the 4-th root of unity, which satisfy the condition $\omega^4 \equiv 1$ mod $7681$ are ${3383, 4298, 7680}$. Out of three roots, 7680 is not a primitive n-th root of unity, as there exists k = 2 < d that satisfy $\omega^d \equiv 1$ mod $7691$ Therefore $\omega$ = 3383 or $\omega$ = 4298 are the primitive 4-th root of unity in $\Z_{7681}$. The value of $\omega$  will be important in calculating NTT and positive-wrapped convolution.
 
-\subsection{Primitive 2n-th Root of Unity}
-Let $\Z_{q}$  be an integer ring modulo q, and $d - 1$ is the polynomial degree of g(x) and h(x) and $\omega$ is a primitive n-th root. $\psi$ is a primitive 2n-th root of unity in $\Z_{q}$ if and only if:
-$\psi^2 \equiv \omega$ mod $q$ and $\psi^d \equiv {-1}$ mod $q$. 
+	\subsection{Primitive 2n-th Root of Unity}
+	Let $\Z_{q}$  be an integer ring modulo q, and $d - 1$ is the polynomial degree of g(x) and h(x) and $\omega$ is a primitive n-th root. $\psi$ is a primitive 2n-th root of unity in $\Z_{q}$ if and only if:
+	$\psi^2 \equiv \omega$ mod $q$ and $\psi^d \equiv {-1}$ mod $q$.
 
-\subsection{Example}
+	\subsubsection{Example}
 
-In a ring $\Z_{7681}$, $d = 4$, and $\omega$ = 3383, the 2n-th root of unity, which satisfies the above conditions, are 1925 and 5756 as $1925^2 = 5756^2 \equiv 3383$ mod 7681 and $1925^4$ = $5756^4$ = $7680 \equiv -1$ mod 7681. The value of $\psi$  will be significant in calculating NTT and negative-wrapped convolution.
+	In a ring $\Z_{7681}$, $d = 4$, and $\omega$ = 3383, the 2n-th root of unity, which satisfies the above conditions, are 1925 and 5756 as $1925^2 = 5756^2 \equiv 3383$ mod 7681 and $1925^4$ = $5756^4$ = $7680 \equiv -1$ mod 7681. The value of $\psi$  will be significant in calculating NTT and negative-wrapped convolution.
 
-\section{NTT-Based Positive-Wrapped Convolution}
-The NTT of a polynomial does not have any physical meaning, unlike Discrete Fourier Transform (DFT) which represents a signal in the frequency domain. However, NTT preserves one of the essential properties of DFT: the convolution theorem, which is valuable in calculating polynomial multiplication.
+	\subsection{Modular multiplicative inverse}
+	In mathematics, particularly in arithmetic, a modular multiplicative inverse of an integer a is an integer x such that the product a*x is congruent to 1 to the modulus q. In the standard notation of modular arithmetic, this congruence is written as
+	a*x $\equiv$ 1 mod q
+	which is the shorthand way of writing the statement that m divides (evenly) the quantity ax - 1, or, put another way, the remainder after dividing ax by the integer m is 1. You can also use the pow()function from Python to calculate modular multiplicative inverse i.e. 5761 = pow(4, -1, 7681), 4298 = pow(3383, -1, 7681), 1213 = pow(1925, -1, 7681)
 
-\subsection{NTT Based on $\omega$}
-The Number Theoretic Transform (NTT) of a vector of polynomial coefficients a is defined as $\hat{a}$ = NTT(a), where:
+	\subsubsection{Example}
+	Let $\Z_{q}$  be an integer ring modulo q = 7681, $d$ is the polynomial degree with d =4, $\omega$ is primitive n-th Root of Unity with $\omega$ = 3383 and  $\psi$ is a primitive 2n-th root of unity with $\psi$ = 1925.  Following are the modular multiplicative inverse for $d$, $\omega$ and $\psi$:
+	$d^{-1}$ = 5761, $\omega^{-1}$ = 4298 and $\psi^{-1}$ = 1213.
 
-$\quad \quad \quad \hat{a_j} = \sum_{i=0}^{d - 1}\omega^{ij}a_i$ mod q
 
-and j = 0, 1, 2, . . . , d - 1
+	\section{NTT-Based Positive-Wrapped Convolution}
+	The NTT of a polynomial does not have any physical meaning, unlike Discrete Fourier Transform (DFT) which represents a signal in the frequency domain. However, NTT preserves one of the essential properties of DFT: the convolution theorem, which is valuable in calculating polynomial multiplication.
 
-\subsection{Example}
+	\subsection{NTT Based on $\omega$}
+	The Number Theoretic Transform (NTT) of a vector of polynomial coefficients a is defined as $\hat{a}$ = NTT(a), where:
 
-If $g(x) = 1 + 2x + 3x^2 + 4x^3$ or in vector notation:  $g = [1, 2, 3, 4]$. 
-In a ring $\Z_{7681}$, $d = 4$ and $\omega =3383$. Thus, the NTT of $g$ can be calculated by the following matrix multiplication:
+	$\quad \quad \quad \hat{a_j} = \sum_{i=0}^{d - 1}\omega^{ij}a_i$ mod q
 
+	and j = 0, 1, 2, . . . , d - 1
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.4\columnwidth]{fig/NTT_cal.png}
- 	\caption{NTT calculations example} 
-\label{fig:NTT_cal}
-\end{figure}
+	\subsubsection{Example}
 
-Therefore, the NTT(g) = $\hat{g}$ = [10, 913, 7679, 6764] in $\Z_{7681}$, $d = 4$ and $\omega =3383$. Note that the NTT of a particular polynomial is not always unique. It depends on the choice of $\omega$. The NTT result will differ if one uses $\omega$ = 4298 instead of $\omega$ = 3383. 
+	If $g(x) = 1 + 2x + 3x^2 + 4x^3$ or in vector notation:  $g = [1, 2, 3, 4]$.
+	In a ring $\Z_{7681}$, $d = 4$ and $\omega =3383$. Thus, the NTT of $g$ can be calculated by the following matrix multiplication:
 
 
-\subsection{INTT Based on $\omega$}
-The Inverse of Number Theoretic Transform (INTT) of an NTT vector $\hat{a}$ is defined as a = NTT($\hat{a}$), where:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.4\columnwidth]{fig/NTT_cal.png}
+		\caption{NTT calculations example}
+		\label{fig:NTT_cal}
+	\end{figure}
 
-$\quad \quad \quad a_i = d^{-1}\sum_{i=0}^{d - 1}\omega^{-ij}\hat{a}_j$ mod q
+	Therefore, the NTT(g) = $\hat{g}$ = [10, 913, 7679, 6764] in $\Z_{7681}$, $d = 4$ and $\omega =3383$. Note that the NTT of a particular polynomial is not always unique. It depends on the choice of $\omega$. The NTT result will differ if one uses $\omega$ = 4298 instead of $\omega$ = 3383.
 
-and j = 0, 1, 2, . . . , d - 1
 
-Note that the INTT has a formula that is very similar to NTT. The only differences are $\omega$ replaced by its inverse in $\Z_{q}$. It always holds that a = INTT(NTT(a)).
+	\subsection{INTT Based on $\omega$}
+	The Inverse of Number Theoretic Transform (INTT) of an NTT vector $\hat{a}$ is defined as a = NTT($\hat{a}$), where:
 
-\subsection{Example}
+	$\quad \quad \quad a_i = d^{-1}\sum_{i=0}^{d - 1}\omega^{-ij}\hat{a}_j$ mod q
 
-If NTT(g) = $\hat{g}$ = $[10, 913, 7679, 6764]$. In a ring $\Z_{7681}$, $d = 4$ and $\omega =3383$. Thus, the INTT of $\hat{g}$ can be calculated by the following matrix multiplication:
+	and j = 0, 1, 2, . . . , d - 1
 
+	Note that the INTT has a formula that is very similar to NTT. The only differences are $\omega$ replaced by its inverse in $\Z_{q}$. It always holds that a = INTT(NTT(a)).
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.4\columnwidth]{fig/INTT_cal.png}
- 	\caption{INTT calculations example} 
-\label{fig:INTT_cal}
-\end{figure}
+	\subsubsection{Example}
 
-In the figure above $n^{-1}$ = $d^{-1}$ = $4^{-1}$ = 5761 after applying mod 7681. Therefore, the INTT($\hat{g}$) = g = [1, 2, 3, 4], which is the initial polynomial coefficient given  
+	If NTT(g) = $\hat{g}$ = $[10, 913, 7679, 6764]$. In a ring $\Z_{7681}$, $d = 4$ and $\omega =3383$. Thus, the INTT of $\hat{g}$ can be calculated by the following matrix multiplication:
 
-\subsection{Using NTT to Calculate Positive-Wrapped Convolutions}
 
-Because NTT is a variant of DFT in the polynomial ring, one can apply DFT convolution theorem to calculate positive-wrapped convolution. Let g and h are the multiplicands’ vectors of polynomial coefficients. The positive-wrapped convolution of g and h, PWC can be calculated by:
-PWC = INTT(NTT(g) $\circ$ NTT(h))
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.4\columnwidth]{fig/INTT_cal.png}
+		\caption{INTT calculations example}
+		\label{fig:INTT_cal}
+	\end{figure}
 
-where $\circ$ is an element-wise vector multiplication in $\Z_{q}$.
+	In the figure above $n^{-1}$ = $d^{-1}$ = $4^{-1}$ = 5761. Therefore, the INTT($\hat{g}$) = g = [1, 2, 3, 4], which is the initial polynomial coefficient given
 
-\subsection{Example}
-Let g = [1,2,3,4] and h = [5,6,7,8]. The NTT of them are $\Z_{7681}$ are ($\hat{g}$) = $[10, 913, 7679, 6764]$ and ($\hat{h}$) = $[10, 913, 7679, 6764]$ when $\omega =3383$. We can calculate their positive-wrapped convolution by:
+	\subsection{Using NTT to Calculate Positive-Wrapped Convolutions}
 
-\begin{figure}[H]
- 	\centering
- 	\includegraphics[width=.9\columnwidth]{fig/PWC_NTT.png}
- 	\caption{Using NTT to Calculate PWC} 
-\label{fig:PWC_NTT}
-\end{figure}
+	Because NTT is a variant of DFT in the polynomial ring, one can apply DFT convolution theorem to calculate positive-wrapped convolution. Let g and h are the multiplicands’ vectors of polynomial coefficients. The positive-wrapped convolution of g and h, PWC can be calculated by:
+	PWC = INTT(NTT(g) $\circ$ NTT(h))
 
-PWC = $[66, 68, 66, 60]$, the same result as calculated by schoolbook multiplication and long division 
+	where $\circ$ is an element-wise vector multiplication in $\Z_{q}$.
 
+	\subsubsection{Example}
+	Let g = [1,2,3,4] and h = [5,6,7,8]. The NTT of them are $\Z_{7681}$ are ($\hat{g}$) = $[10, 913, 7679, 6764]$ and ($\hat{h}$) = $[10, 913, 7679, 6764]$ when $\omega =3383$. We can calculate their positive-wrapped convolution by:
 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.9\columnwidth]{fig/PWC_NTT.png}
+		\caption{Using NTT to Calculate PWC}
+		\label{fig:PWC_NTT}
+	\end{figure}
 
-\section{NTT-Based Negative-Wrapped Convolution}
-This section explains the definition of Number Theoretic Transform (NTT) and its inverse (INTT) based on the 2n-th root of unity, $\psi$.
+	PWC = $[66, 68, 66, 60]$, the same result as calculated by schoolbook multiplication and long division
 
-\subsection{NTT Based on $\psi$}
-The Number Theoretic Transform (${NTT}^\psi$) of a vector of polynomial coefficients a is defined as $\hat{a}$ = ${NTT}^\psi$(a), where:
 
-$\quad \quad \quad \hat{a_j} = \sum_{i=0}^{d - 1}\psi^{2ij+i}a_i$ mod q
 
-\subsection{Example}
+	\section{NTT-Based Negative-Wrapped Convolution}
+	This section explains the definition of Number Theoretic Transform (NTT) and its inverse (INTT) based on the 2n-th root of unity, $\psi$.
 
-If $g(x) = 1 + 2x + 3x^2 + 4x^3$ or in vector notation:  $g = [1, 2, 3, 4]$. 
-In a ring $\Z_{7681}$, $d = 4$ and $\psi =1925$. Thus, the matrix multiplication using the above equation can calculate the ${NTT}^\psi$ of $g$.
+	\subsection{NTT Based on $\psi$}
+	The Number Theoretic Transform (${NTT}^\psi$) of a vector of polynomial coefficients a is defined as $\hat{a}$ = ${NTT}^\psi$(a), where:
 
-${NTT}^\psi$(g) = $\hat{g}$ = $[1467, 2807, 3471, 7621]$. 
+	$\quad \quad \quad \hat{a_j} = \sum_{i=0}^{d - 1}\psi^{2ij+i}a_i$ mod q
 
-\subsection{INTT Based on $\psi$}
-The Inverse of the Number Theoretic Transform (INTT) of an NTT vector $\hat{a}$ is defined as a = ${INTT}^\psi$($\hat{a}$), where:
+	\subsubsection{Example}
 
-$\quad \quad \quad a_i = d^{-1}\sum_{i=0}^{d - 1}\psi^{-(2ii+j)j}\hat{a}_j$ mod q
+	If $g(x) = 1 + 2x + 3x^2 + 4x^3$ or in vector notation:  $g = [1, 2, 3, 4]$.
+	In a ring $\Z_{7681}$, $d = 4$ and $\psi =1925$. Thus, the matrix multiplication using the above equation can calculate the ${NTT}^\psi$ of $g$.
 
-and j = 0, 1, 2, . . . , d - 1
+	${NTT}^\psi$(g) = $\hat{g}$ = $[1467, 2807, 3471, 7621]$.
 
-\subsection{Example}
+	\subsection{INTT Based on $\psi$}
+	The Inverse of the Number Theoretic Transform (INTT) of an NTT vector $\hat{a}$ is defined as a = ${INTT}^\psi$($\hat{a}$), where:
 
-Let ${NTT}^\psi$(g) = $\hat{g}$ = $[1467,2807,3471,7621]$. In a ring $\Z_{7681}$, $d = 4$, $\omega =3383$ and $\psi =1925$. Thus, the INTT of $\hat{g}$ can be calculated by matrix multiplication. In the equation $d^{-1}$ = $4^{-1}$ = 5761 and $/psi^{-1}$ = ${1925}^{-1}$ = 1213. Therefore, the INTT($\hat{g}$) = g = [1, 2, 3, 4], which is the initial polynomial coefficient given  
+	$\quad \quad \quad a_i = d^{-1}\sum_{i=0}^{d - 1}\psi^{-(2ii+j)j}\hat{a}_j$ mod q
 
-\subsection{Using NTT to Calculate Negative-Wrapped Convolutions}
+	and j = 0, 1, 2, . . . , d - 1
 
-Let g and h are the multiplicands vectors of polynomial coefficients. The negative-wrapped convolution of g and h, NWC can be calculated by:
-NWC = ${INTT}^\psi$(${NTT}^\psi$(g) $\circ$ ${NTT}^\psi$(h))
+	\subsubsection{Example}
 
-where $\circ$ is an element-wise vector multiplication in $\Z_{q}$.
+	Let ${NTT}^\psi$(g) = $\hat{g}$ = $[1467,2807,3471,7621]$. In a ring $\Z_{7681}$, $d = 4$, $\omega =3383$ and $\psi =1925$. Thus, the INTT of $\hat{g}$ can be calculated by matrix multiplication. In the equation $d^{-1}$ = $4^{-1}$ = 5761 and $/psi^{-1}$ = ${1925}^{-1}$ = 1213. Therefore, the INTT($\hat{g}$) = g = [1, 2, 3, 4], which is the initial polynomial coefficient given
 
-\subsection{Example}
-Let g = [1,2,3,4] and h = [5,6,7,8]. The ${NTT}^\psi$ of them are ($\hat{g}$) = $[1467,2807,3471,7621]$ and ($\hat{h}$) = $[2489,7489,6478,6607]$. In a ring$\Z_{7681}$, $\omega =3383$ and $\psi =1925$. NWC = $[7625, 7645, 2, 60]$, the same result calculated by schoolbook multiplication and long division when written with negative numbers [-56, -36, 2, 60].
+	\subsection{Using NTT to Calculate Negative-Wrapped Convolutions}
+
+	Let g and h are the multiplicands vectors of polynomial coefficients. The negative-wrapped convolution of g and h, NWC can be calculated by:
+	NWC = ${INTT}^\psi$(${NTT}^\psi$(g) $\circ$ ${NTT}^\psi$(h))
+
+	where $\circ$ is an element-wise vector multiplication in $\Z_{q}$.
+
+	\subsubsection{Example}
+	Let g = [1,2,3,4] and h = [5,6,7,8]. The ${NTT}^\psi$ of them are ($\hat{g}$) = $[1467,2807,3471,7621]$ and ($\hat{h}$) = $[2489,7489,6478,6607]$. In a ring$\Z_{7681}$, $\omega =3383$ and $\psi =1925$. NWC = $[7625, 7645, 2, 60]$, the same result calculated by schoolbook multiplication and long division when written with negative numbers [-56, -36, 2, 60].
 
 \end{document}
 
