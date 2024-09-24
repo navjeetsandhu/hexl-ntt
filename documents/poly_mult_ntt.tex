@@ -260,7 +260,7 @@ For example, if q equals 2, then $\Z_{q}$ (which is $\Z_{2}$ in this case) inclu
 If q equals 17, then $\Z_{q}$ (which is $\Z_{17}$ in this case) includes only 0 to 16 because any integer leaves a remainder of 0 to 16 when divided by 17. Hence the vector multiplication for vectors $g = [1, 2, 3, 4]$, and $h = [5, 6, 7, 8]$ with modulo a prime number $q = 17$ is  $[5, 16, 0, 9, 10, 1, 15]$
 
 \section{Positive wrapped convolution (cyclic convolution)}
-However, one can quickly notice an item that is “not so positive” in the current setting - the degree of the polynomial will only grow larger and larger as we perform more multiplications. That means we need a more extended array to store coefficients and more complex convolutions every time a multiplication is performed. It would be great if the degree of the polynomials could “wrap around” just like the coefficients. As it turns out, another algebraic structure is precisely for that - Polynomial Quotient Rings. Like in the base field  $\Z_{q}$, where we would take modulo q after every arithmetic operation, we can also take modulo some polynomial $\Phi(x)$ after every polynomial operation. The resulting polynomial’s degree would never be more significant or equal to the degree of $\Phi(x)$. We call such structure $\Z_{q}[x]/(\Phi(x))$. In the context of lattice-based Cryptography, $\Phi(x)$ is chosen to be a polynomial looking either like $x^d - 1$ or $x^d + 1$.  A cyclic convolution or positive wrapped convolution, $PWC(x)$ is defined as: $PWC(x) = \Z_{q}/x^d - 1$  
+However, one can quickly notice an item that is not so positive in the current setting - the degree of the polynomial will only grow larger and larger as we perform more multiplications. That means we need a more extended array to store coefficients and more complex convolutions every time a multiplication is performed. It would be great if the degree of the polynomials could “wrap around” just like the coefficients. As it turns out, another algebraic structure is precisely for that - Polynomial Quotient Rings. Like in the base field  $\Z_{q}$, where we would take modulo q after every arithmetic operation, we can also take modulo some polynomial $\Phi(x)$ after every polynomial operation. The resulting polynomial’s degree would never be more significant or equal to the degree of $\Phi(x)$. We call such structure $\Z_{q}[x]/(\Phi(x))$. In the context of lattice-based Cryptography, $\Phi(x)$ is chosen to be a polynomial looking either like $x^d - 1$ or $x^d + 1$.  A cyclic convolution or positive wrapped convolution, $PWC(x)$ is defined as: $PWC(x) = \Z_{q}/x^d - 1$
 
 
 \begin{figure}[H]
@@ -288,9 +288,9 @@ A cyclic convolution or negative wrapped convolution, $NWC(x)$ is defined as: $P
 
 \begin{figure}[H]
  	\centering
- 	\includegraphics[width=.9\columnwidth]{fig/PWC_cplus.png}
+ 	\includegraphics[width=.9\columnwidth]{fig/NWC_cplus.png}
  	\caption{Negative wrapped convolution (negacyclic convolution) in C++} 
-\label{fig:PWC_cplus}
+\label{fig:NWC_cplus}
 \end{figure}
 
 \subsection{Example}
@@ -369,14 +369,14 @@ If NTT(g) = $\hat{g}$ = $[10, 913, 7679, 6764]$. In a ring $\Z_{7681}$, $d = 4$ 
  	\centering
  	\includegraphics[width=.4\columnwidth]{fig/INTT_cal.png}
  	\caption{INTT calculations example} 
-\label{fig:NTT_cal}
+\label{fig:INTT_cal}
 \end{figure}
 
 In the figure above $n^{-1}$ = $d^{-1}$ = $4^{-1}$ = 5761 after applying mod 7681. Therefore, the INTT($\hat{g}$) = g = [1, 2, 3, 4], which is the initial polynomial coefficient given  
 
 \subsection{Using NTT to Calculate Positive-Wrapped Convolutions}
 
-Because NTT is a variant of DFT in the polynomial ring, one can apply DFT’s convolution theorem to calculate positive-wrapped convolution. Let g and h are the multiplicands’ vectors of polynomial coefficients. The positive-wrapped convolution of g and h, PWC can be calculated by:
+Because NTT is a variant of DFT in the polynomial ring, one can apply DFT convolution theorem to calculate positive-wrapped convolution. Let g and h are the multiplicands’ vectors of polynomial coefficients. The positive-wrapped convolution of g and h, PWC can be calculated by:
 PWC = INTT(NTT(g) $\circ$ NTT(h))
 
 where $\circ$ is an element-wise vector multiplication in $\Z_{q}$.
@@ -423,7 +423,7 @@ Let ${NTT}^\psi$(g) = $\hat{g}$ = $[1467,2807,3471,7621]$. In a ring $\Z_{7681}$
 
 \subsection{Using NTT to Calculate Negative-Wrapped Convolutions}
 
-Let g and h are the multiplicands’ vectors of polynomial coefficients. The negative-wrapped convolution of g and h, NWC can be calculated by:
+Let g and h are the multiplicands vectors of polynomial coefficients. The negative-wrapped convolution of g and h, NWC can be calculated by:
 NWC = ${INTT}^\psi$(${NTT}^\psi$(g) $\circ$ ${NTT}^\psi$(h))
 
 where $\circ$ is an element-wise vector multiplication in $\Z_{q}$.
