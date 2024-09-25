@@ -438,8 +438,15 @@
 
 	where $\circ$ is an element-wise vector multiplication in $\Z_{q}$.
 
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.9\columnwidth]{fig/hexl_ntt_nwc.png}
+		\caption{Using HEXL NTT to Calculate NWC in C++}
+		\label{fig:hexl_ntt_nwc}
+	\end{figure}
+
 	\subsubsection{Example}
 	Let g = [1,2,3,4] and h = [5,6,7,8]. The ${NTT}^\psi$ of them are ($\hat{g}$) = $[1467,2807,3471,7621]$ and ($\hat{h}$) = $[2489,7489,6478,6607]$. In a ring$\Z_{7681}$, $\omega =3383$ and $\psi =1925$. NWC = $[7625, 7645, 2, 60]$, the same result calculated by schoolbook multiplication and long division when written with negative numbers [-56, -36, 2, 60].
 
 \end{document}
-
