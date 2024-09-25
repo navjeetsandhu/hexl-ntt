@@ -24,5 +24,22 @@ namespace ntt {
         ntt::compute_inverse(result, output.data(), ntt);
     }
 
+    void eltwise_mult_mod(uint64_t *result, const uint64_t *p1, const uint64_t *p2, uint64_t degree, uint64_t modulus) {
+        intel::hexl::EltwiseMultMod(result, p1, p2, degree, modulus,1);
+    }
+
+
+    void ntt_nwc(uint64_t *result, const uint64_t *p1, const uint64_t *p2, uint64_t degree, uint64_t modulus) {
+        auto ntt = ntt::create_ntt(degree, modulus);
+        std::vector<uint64_t> output(degree);
+        std::vector<uint64_t> p1_output(degree);
+        std::vector<uint64_t> p2_output(degree);
+        ntt::compute_forward(p1_output.data(), p1, ntt);
+        ntt::compute_forward(p2_output.data(), p2, ntt);
+        eltwise_mult_mod(output.data(), p1_output.data(), p2_output.data(), degree, modulus);
+        ntt::compute_inverse(result, output.data(), ntt);
+    }
+
+
 }
 
