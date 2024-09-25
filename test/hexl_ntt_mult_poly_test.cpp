@@ -1,7 +1,8 @@
 #include<iostream>
-#include "ntt.hpp"
+#include "hexl_ntt.hpp"
 #include "custom_assert.h"
 #include"utils.hpp"
+
 
 void print_input(const uint64_t *p1, const uint64_t *p2, uint64_t degree, uint64_t modulus) {
     std::cout << "mod " << modulus << std::endl;
@@ -24,7 +25,7 @@ void test_eltwise_mult_mod(const uint64_t *result, const uint64_t *p1, const uin
     print_input(p1, p2, degree, modulus);
     std::vector<uint64_t> output(degree);
 
-    ntt::eltwise_mult_mod(output.data(), p1, p2, degree, modulus);
+    hexl_ntt::eltwise_mult_mod(output.data(), p1, p2, degree, modulus);
     print_verify_output(result, output.data(), degree);
 }
 
@@ -41,7 +42,7 @@ void test_ntt_nwc(const uint64_t *result, const uint64_t *p1, const uint64_t *p2
     print_input(p1, p2, degree, modulus);
     std::vector<uint64_t> output(degree);
 
-    ntt::ntt_nwc(output.data(), p1, p2, degree, modulus);
+    hexl_ntt::test_hexl_ntt_nwc(output.data(), p1, p2, degree, modulus);
     print_verify_output(result, output.data(), degree);
 }
 
@@ -53,10 +54,8 @@ void test_ntt_nwc() {
 }
 
 
-
-
 int main() {
-    std::cout << "Test HEXL NTT!" << std::endl;
+    std::cout << "Test HEXL NTT polynomial multiplication" << std::endl;
     test_eltwise_mult_mod();
     test_ntt_nwc();
 

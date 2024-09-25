@@ -1,5 +1,5 @@
 #include<iostream>
-#include "ntt.hpp"
+#include "hexl_ntt.hpp"
 #include "custom_assert.h"
 #include "file.h"
 
@@ -12,7 +12,9 @@ auto getData0() {
                                   496, 353, 624, 280, 457, 757, 635, 424,
                                   343, 356, 405, 151, 487, 352, 221, 203});
 }
-void test_ntt_full(uint64_t *result, const uint64_t *operand, uint64_t N, uint64_t modulus) {
+
+
+void test_ntt_full_loop(uint64_t *result, const uint64_t *operand, uint64_t N, uint64_t modulus) {
     int i;
 
     std::cout << "N: " << N << " Modulus: " << modulus << "\n";
@@ -23,7 +25,7 @@ void test_ntt_full(uint64_t *result, const uint64_t *operand, uint64_t N, uint64
     }
     std::cout << '\n';
 
-    ntt::ntt_full(result, operand, N, modulus);
+    hexl_ntt::test_hexl_ntt_full_loop(result, operand, N, modulus);
 
     std::cout << "ComputeInverse Output:\n";
 
@@ -38,14 +40,14 @@ void test_ntt_full(uint64_t *result, const uint64_t *operand, uint64_t N, uint64
     std::cout << "Test Pass" << '\n';
 
 }
-void test_ntt_full(std::tuple<uint64_t, uint64_t, std::vector<uint64_t>>&& input_data)
+void test_ntt_full_loop(std::tuple<uint64_t, uint64_t, std::vector<uint64_t>>&& input_data)
 
 {
     uint64_t modulus = std::get<1>(input_data);
     uint64_t N = std::get<0>(input_data);
     std::vector<uint64_t> input = std::get<2>(input_data);
     std::vector<uint64_t> out_buffer_final(N);
-    test_ntt_full(out_buffer_final.data(), input.data(), N, modulus);
+    test_ntt_full_loop(out_buffer_final.data(), input.data(), N, modulus);
 }
 
 
@@ -59,12 +61,12 @@ void test_torus32_dist_ntt() {
         return;
     }
 
-    test_ntt_full(std::make_tuple(N, modulus, data));
+    test_ntt_full_loop(std::make_tuple(N, modulus, data));
 }
 
 int main() {
-    std::cout << "Test Basic NTT!" << std::endl;
-    test_ntt_full(getData0());
+    std::cout << "Test HEXL NTT basic functionality" << std::endl;
+    test_ntt_full_loop(getData0());
     test_torus32_dist_ntt();
     return 0;
 }
