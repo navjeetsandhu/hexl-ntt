@@ -1,5 +1,5 @@
 import numpy as np
-from she import RLWE, Rq
+from lwe import RLWE, Rq
 
 if __name__ == '__main__':
     n = 8  # power of 2
