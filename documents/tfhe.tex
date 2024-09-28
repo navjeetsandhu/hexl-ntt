@@ -247,7 +247,8 @@ Let’s choose N (degree) = 4 and k =2. Let's sample the secret key with a unifo
 
 \begin{align*} 
 \overrightarrow{S} &= ([0,1,1,0],[1,0,1,1]) \in R^2 \\ 
-\overrightarrow{S} &= (x + x^2,1+x^2+x^3) \in R^2 \\ 
+\overrightarrow{S} &= (0 + x + x^2 + 0x^3,1 + 0x + x^2 + x^3) \in R^2 \\ 
+\overrightarrow{S} &= (x + x^2, 1 + x^2 + x^3) \in R^2 \\ 
 \end{align*}
 
 
@@ -302,7 +303,7 @@ Let's add [-1,1,0,1] error.
 The body of an encrypted message is:
 
 	\begin{align*}
-		B &= \sum_{i=0}^{k-1}A_i \circ S_i + \bigtriangleup M + E \in R_q  \\
+		B &= \sum_{i=0}^{k-1}A_i . S_i + \bigtriangleup M + E \in R_q  \\
 	\end{align*}
 
 where $\bigtriangleup$ = q/p.
@@ -317,9 +318,13 @@ Let’s continue with previous examples for N (degree) = 4, p (plain modulus) = 
 	\end{align*}
 
 
-When we compute in $R_q$, we do polynomial operations modulo $x*N + 1$ and modulo q
-. To reduce modulo $x*N + 1$, you can observe that $x^N \equiv -1$ mod $x^N + 1$, So
+When we compute $R_q$, we do polynomial operations modulo $x^N + 1$ and modulo q. 
+To reduce modulo $x^N + 1$, you can observe that:
 
+
+        $\quad \quad \quad  x^N$  = $x^N \equiv$ -1 mod $x^N$ + 1
+
+So
 	\begin{align*}
 		 A_0.S_0 &=  (17-2x -24x^2 +9x^3).(x + x^2) \\
             &= 17x + (17-2)x^2 + (-2-24)x^3 + (-24+9)x^4 + 9x^5  \\
@@ -331,14 +336,12 @@ When we compute in $R_q$, we do polynomial operations modulo $x*N + 1$ and modul
 	\end{align*}
 
 In the same way:
-
 	\begin{align*}
 		 A_1.S_1 &=  -13-20x+28x+7x3 \in R_q \\
          \bigtriangleup M &= -32 +16x - 16x^3  \\
 	\end{align*}
 
 Then:
-
 	\begin{align*}
 		 B &=   A_0.S_0 + A_1.S_1 + \bigtriangleup M + E \in R_q  \\
           &= -31 + 5x - 21x^2 + 30x^3 \in R_q  \\
@@ -359,6 +362,31 @@ Let’s continue with previous examples for N (degree) = 4, p (plain modulus) = 
 	\begin{align*}
         GLWE_{\overrightarrow{S},\sigma}(\bigtriangleup M)	&=	 (A_0,A_{1}, B) \subseteq  R_{64}^{3} \\
         &= (17-2x -24x^2 +9x^3, -14-x^2+21x^3, -31 + 5x - 21x^2 + 30x^3) \subseteq  R_{64}^{3} 
+	\end{align*}
+
+	\subsection{Decryption}
+We can decrypt the ciphertext using the following equation:
+
+	\begin{align*}
+		B  - \sum_{i=0}^{k-1}A_i . S_i  &= \bigtriangleup M + E   \\
+             (\bigtriangleup M + E)/\bigtriangleup  &= M\\
+	\end{align*}
+
+Observe that the message M is in the MSB part (thanks to the multiplication by $\bigtriangleup$ ) while E is in the LSB part. If |E| <  $\bigtriangleup$/2 (so if every coefficient of |$e_i$| < $\bigtriangleup$/2), then the second step of the decryption M returns as expected. 
+
+\subsubsection{Example}
+Let’s continue with previous examples. 
+
+	\begin{align*}
+            B &= -31 + 5x - 21x^2 + 30x^3 \\
+            A_0.S_0 &= 15 + 8x + 15x^2 -26x^3
+            A_1.S_1 &=  -13-20x+28x+7x3
+		\bigtriangleup M + E  &= B  - \sum_{i=0}^{1}A_i . S_i 
+            \bigtriangleup M + E  &= B  - A_0.S_0 - A_1.S_1
+            \bigtriangleup M + E &= -29 + 17x - 15x^2
+            M &= (-29 + 17x - 15x^3)/ \bigtriangleup 
+            M &= (-29 + 17x - 15x^3)/ 16
+                &= -2 + x -x^2
 	\end{align*}
 
 
