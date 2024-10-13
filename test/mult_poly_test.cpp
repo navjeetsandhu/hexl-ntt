@@ -2,6 +2,8 @@
 #include"utils.hpp"
 
 
+
+
 void test_mult_poly(const std::vector<uint64_t>& p1,
         const std::vector<uint64_t>& p2,
         uint64_t q, uint64_t d
@@ -9,15 +11,23 @@ void test_mult_poly(const std::vector<uint64_t>& p1,
 {
     const std::string q_string = std::to_string(q);
     const std::string d_string = std::to_string(d);
+    std::string string_msg = "Schoolbook Multiplication";
     print_results("Input p1", p1);
     print_results("Input p2", p2);
     std::vector<uint64_t> result(p1.size() + p2.size() - 1, 0);
     mult_poly_naive(p1, p2, result);
-    print_results("Schoolbook Multiplication", result);
+    print_results(string_msg, result);
+
+
+    std::fill(result.begin(), result.end(), 0);
+    poly_mul_naive_tfhepp(p1, p2, result);
+    string_msg = "poly_mul_naive_tfhepp = " + q_string;
+    print_signed_results(string_msg , result);
+
 
     std::fill(result.begin(), result.end(), 0);
     mult_poly_naive_q(p1, p2, q,result);
-    std::string string_msg = "Wrap around integers modulo a prime number q = " + q_string;
+    string_msg = "Wrap around integers modulo a prime number q = " + q_string;
     print_results(string_msg , result);
 
     std::fill(result.begin(), result.end(), 0);
