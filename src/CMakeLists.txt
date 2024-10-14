@@ -11,7 +11,8 @@ target_include_directories(
   PUBLIC
     ${PROJECT_SOURCE_DIR}/include
     ${PROJECT_SOURCE_DIR}/thirdparties/hexl/hexl/hexl/include
-    ${PROJECT_SOURCE_DIR}/thirdparties/randen)
+    ${PROJECT_SOURCE_DIR}/thirdparties/randen
+    ${PROJECT_SOURCE_DIR}/thirdparties/spqlios)
 
 if(USE_RANDEN)
   target_link_libraries(hexl-ntt INTERFACE randen)

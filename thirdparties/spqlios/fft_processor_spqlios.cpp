@@ -250,6 +250,6 @@ FFT_Processor_Spqlios::~FFT_Processor_Spqlios() {
     delete[] cosomegaxminus1;
 }
 
-thread_local FFT_Processor_Spqlios fftplvl_4(4);
-thread_local FFT_Processor_Spqlios fftplvl_1024(1024);
+thread_local FFT_Processor_Spqlios fftp(N_FFT);
+
 
