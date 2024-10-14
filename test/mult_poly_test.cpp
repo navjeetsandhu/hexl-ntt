@@ -1,9 +1,6 @@
 #include "mult_poly.hpp"
 #include"utils.hpp"
 
-
-
-
 void test_mult_poly(const std::vector<uint64_t>& p1,
         const std::vector<uint64_t>& p2,
         uint64_t q, uint64_t d
@@ -17,12 +14,6 @@ void test_mult_poly(const std::vector<uint64_t>& p1,
     std::vector<uint64_t> result(p1.size() + p2.size() - 1, 0);
     mult_poly_naive(p1, p2, result);
     print_results(string_msg, result);
-
-
-    std::fill(result.begin(), result.end(), 0);
-    poly_mul_naive_tfhepp(p1, p2, result);
-    string_msg = "poly_mul_naive_tfhepp = " + q_string;
-    print_signed_results(string_msg , result);
 
 
     std::fill(result.begin(), result.end(), 0);
@@ -42,6 +33,12 @@ void test_mult_poly(const std::vector<uint64_t>& p1,
     std::copy_n(result.begin(), d, res.begin());
     string_msg = "Negative wrapped convolution, (Negacyclic convolution nwc) with q = " +q_string + "  d = " +d_string;
     print_results(string_msg, res);
+
+    std::fill(result.begin(), result.end(), 0);
+    mult_poly_naive_tfhepp(p1, p2, result);
+    string_msg = "mult_poly_naive_tfhepp = " + q_string;
+    print_signed_results(string_msg , result);
+
 }
 
 

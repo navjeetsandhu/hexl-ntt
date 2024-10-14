@@ -45,6 +45,8 @@ if(USE_RANDEN)
   add_subdirectory(thirdparties/randen)
 endif()
 
+add_subdirectory(thirdparties/spqlios)
+
 add_subdirectory(src)
 
 if(ENABLE_TEST)

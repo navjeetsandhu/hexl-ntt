@@ -23,7 +23,7 @@ void mult_poly_naive(const std::vector<uint64_t> & p1,
 }
 
 
-void poly_mul_naive_tfhepp(const std::vector<uint64_t>  &a,
+void mult_poly_naive_tfhepp(const std::vector<uint64_t>  &a,
                          const std::vector<uint64_t>  &b, std::vector<uint64_t> &res)
 {
     uint64_t length = a.size();
