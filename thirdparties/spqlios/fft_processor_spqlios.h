@@ -51,5 +51,5 @@ public:
     ~FFT_Processor_Spqlios();
 };
 
-extern thread_local FFT_Processor_Spqlios fftplvl1;
-extern thread_local FFT_Processor_Spqlios fftplvl2;
+extern thread_local FFT_Processor_Spqlios fftplvl_4;
+extern thread_local FFT_Processor_Spqlios fftplvl_1024;

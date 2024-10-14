@@ -1,9 +1,5 @@
-#include <cassert>
 #include <cmath>
 #include<cstdint>
-
-
-
 #include "x86.h"
 #include "fft_processor_spqlios.h"
 
@@ -255,4 +251,5 @@ FFT_Processor_Spqlios::~FFT_Processor_Spqlios() {
 }
 
 thread_local FFT_Processor_Spqlios fftplvl_4(4);
+thread_local FFT_Processor_Spqlios fftplvl_1024(1024);
 
