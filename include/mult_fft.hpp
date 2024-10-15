@@ -11,9 +11,9 @@ inline void TwistIFFT(std::array<double, N_FFT> &res, const std::array<uint32_t,
 
 inline void MulInFD(std::array<double, N_FFT> &res, const std::array<double, N_FFT> &b);
 
-inline void PolyMulFFT(std::array<uint64_t, N_FFT>& res, const std::array<uint64_t,N_FFT> &a,
-         const std::array<uint64_t, N_FFT> &b);
-inline void PolyMulFFT(std::array<uint32_t, N_FFT>& res, const std::array<uint32_t,N_FFT> &a,
+void PolyMulFFT(std::array<uint64_t, N_FFT> &res, const std::array<uint64_t, N_FFT>  &a,
+                  const std::array<uint64_t, N_FFT>  &b);
+void PolyMulFFT(std::array<uint32_t, N_FFT>& res, const std::array<uint32_t,N_FFT> &a,
                        const std::array<uint32_t, N_FFT> &b);
 void PolyMulNaive(std::array<uint64_t, N_FFT> &res, const std::array<uint64_t, N_FFT>  &a,
                             const std::array<uint64_t, N_FFT>  &b);

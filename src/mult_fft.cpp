@@ -2,7 +2,7 @@
 
 inline void TwistFFT(std::array<uint64_t, N_FFT> &res, const std::array<double, N_FFT> &a)
 {
-    fftp.execute_direct_torus64(res.data(), a.data());
+    //fftp.execute_direct_torus64(res.data(), a.data());
 }
 
 inline void TwistFFT(std::array<uint32_t, N_FFT> &res, const std::array<double, N_FFT> &a)
@@ -12,7 +12,7 @@ inline void TwistFFT(std::array<uint32_t, N_FFT> &res, const std::array<double, 
 
 inline void TwistIFFT(std::array<double, N_FFT> &res, const std::array<uint64_t, N_FFT> &a)
 {
-    fftp.execute_reverse_torus64(res.data(), a.data());
+    //fftp.execute_reverse_torus64(res.data(), a.data());
 }
 
 inline void TwistIFFT(std::array<double, N_FFT> &res, const std::array<uint32_t, N_FFT> &a)
@@ -30,8 +30,8 @@ inline void MulInFD(std::array<double, N_FFT> &res, const std::array<double, N_F
     }
 }
 
-inline void PolyMulFFT(std::array<uint64_t, N_FFT>& res, const std::array<uint64_t,N_FFT> &a,
-         const std::array<uint64_t, N_FFT> & b)
+void PolyMulFFT(std::array<uint64_t, N_FFT> &res, const std::array<uint64_t, N_FFT>  &a,
+                const std::array<uint64_t, N_FFT>  &b)
 {
     alignas(64) std::array<double, N_FFT> ffta{};
     TwistIFFT(ffta, a);
@@ -41,7 +41,7 @@ inline void PolyMulFFT(std::array<uint64_t, N_FFT>& res, const std::array<uint64
     TwistFFT(res, ffta);
 }
 
-inline void PolyMulFFT(std::array<uint32_t, N_FFT>& res, const std::array<uint32_t,N_FFT> &a,
+void PolyMulFFT(std::array<uint32_t, N_FFT>& res, const std::array<uint32_t,N_FFT> &a,
                        const std::array<uint32_t, N_FFT> & b)
 {
     alignas(64) std::array<double, N_FFT> ffta{};

@@ -16,7 +16,7 @@ void test_mult_fft(const std::array<uint64_t, N_FFT_TEST>& p1, const std::array<
 
 
     std::fill(result.begin(), result.end(), 0);
-    PolyMulNaive(result, p1, p2);
+    PolyMulFFT(result, p1, p2);
     string_msg = "FFT Multiplication";
     print_results<uint64_t>(string_msg, result.data(), result.size());
 }
