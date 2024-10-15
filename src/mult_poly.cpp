@@ -22,26 +22,6 @@ void mult_poly_naive(const std::vector<uint64_t> & p1,
             result[i + j] += p1[i] * p2[j];
 }
 
-
-void mult_poly_naive_tfhepp(const std::vector<uint64_t>  &a,
-                         const std::vector<uint64_t>  &b, std::vector<uint64_t> &res)
-{
-    uint64_t length = a.size();
-    for (int i = 0; i < length; i++) {
-        uint64_t ri = 0;
-        for (int j = 0; j <= i; j++)
-            ri += static_cast<typename std::make_signed<uint64_t>::type>(
-                          a[j]) *
-                  b[i - j];
-        for (int j = i + 1; j < length; j++)
-            ri -= static_cast<typename std::make_signed<uint64_t>::type>(
-                          a[j]) *
-                  b[length + i - j];
-        res[i] = ri;
-    }
-}
-
-
 /*
  * integers modulo a prime number q
  * The interesting thing about working in a finite field is that the polynomial coefficients

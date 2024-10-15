@@ -2,6 +2,12 @@
 
 #include<iostream>
 #include <vector>
-void print_results(const std::string& msg, const std::vector<uint64_t>& result);
-void print_results(const std::string& msg, const uint64_t* result, uint64_t n);
-void print_signed_results(const std::string& msg, const std::vector<uint64_t>& result);
+
+template <class P>
+void print_results(const std::string& msg, const P* result, P size){
+    std::cout << msg << ": " << std::endl;
+    for (int i = 0; i < size; ++i)
+        std::cout <<  result[i] << ' ';
+
+    std::cout << std::endl << std::endl;
+}
